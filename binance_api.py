@@ -43,6 +43,6 @@ def print_pairs_and_volumes(pairs):
         if volume is not None:
             print(f"{pair:<10} {volume:<25}")
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # Исправлено на "__name__"
     usdt_pairs = get_usdt_pairs()
     print_pairs_and_volumes(usdt_pairs)
