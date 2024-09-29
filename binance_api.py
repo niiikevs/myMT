@@ -28,11 +28,14 @@ def get_daily_volume(symbol):
     
     if response.status_code == 200:
         data = response.json()
+        # Выводим весь ответ для отладки
+        print(f"Ответ для {symbol}: {data}")
+        
         # Проверяем наличие ключа 'quoteVolume'
         if 'quoteVolume' in data:
             return data['quoteVolume']  # Суточный объем в USDT
         else:
-            print(f"Ключ 'quoteVolume' не найден для {symbol}.")
+            print(f"Ключ 'quoteVolume' не найден для {symbol}. Ответ: {data}")
             return None
     else:
         print(f"Ошибка: {response.status_code} для {symbol}.")
