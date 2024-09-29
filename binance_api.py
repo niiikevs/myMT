@@ -1,0 +1,48 @@
+import requests
+
+def get_usdt_pairs():
+    # URL для получения информации о фьючерсных парах
+    url = "https://fapi.binance.com/fapi/v1/exchangeInfo"
+    
+    # Выполнение GET-запроса
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        pairs = []
+        
+        # Проход по всем символам и фильтрация пар к USDT
+        for symbol_info in data['symbols']:
+            if symbol_info['quoteAsset'] == 'USDT':
+                pairs.append(symbol_info['symbol'])
+        
+        return pairs
+    else:
+        print(f"Ошибка: {response.status_code}")
+        return []
+
+def get_daily_volume(symbol):
+    # URL для получения данных о торгах
+    url = f"https://fapi.binance.com/fapi/v1/ticker/24hr?symbol={symbol}"
+    
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        return data['quoteVolume']  # Суточный объем в USDT
+    else:
+        print(f"Ошибка: {response.status_code}")
+        return None
+
+def print_pairs_and_volumes(pairs):
+    print(f"{'Пара':<10} {'Суточный объем (USDT)':<25}")
+    print("=" * 35)
+    
+    for pair in pairs:
+        volume = get_daily_volume(pair)
+        if volume is not None:
+            print(f"{pair:<10} {volume:<25}")
+
+if __name__ == "__main__":
+    usdt_pairs = get_usdt_pairs()
+    print_pairs_and_volumes(usdt_pairs)
