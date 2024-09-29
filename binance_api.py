@@ -31,7 +31,7 @@ def get_daily_volume(symbol):
         
         # Проверяем наличие ключа 'quoteVolume'
         if 'quoteVolume' in data:
-            return data['quoteVolume']  # Суточный объем в USDT
+            return float(data['quoteVolume'])  # Суточный объем в USDT
         else:
             print(f"Ключ 'quoteVolume' не найден для {symbol}.")
             return None
@@ -47,8 +47,8 @@ def print_pairs_and_volumes(pairs):
     for pair in pairs:
         volume = get_daily_volume(pair)
         if volume is not None:
-            print(f"{pair:<10} {volume:<25}")
+            print(f"{pair:<10} {volume:<25,.2f}")  # Форматируем вывод
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # Исправлено здесь
     usdt_pairs = get_usdt_pairs()
     print_pairs_and_volumes(usdt_pairs)
