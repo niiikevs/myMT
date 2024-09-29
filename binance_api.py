@@ -47,7 +47,7 @@ def print_pairs_and_volumes(pairs):
     for pair in pairs:
         volume = get_daily_volume(pair)
         if volume is not None:
-            print(f"{pair:<10} {volume:<25,.2f}")  # Форматируем вывод
+            print(f"{pair:<10} {int(volume):<25}")  # Форматируем вывод без дробных и запятых
 
 if __name__ == "__main__":  # Исправлено здесь
     usdt_pairs = get_usdt_pairs()
